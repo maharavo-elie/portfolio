@@ -15,7 +15,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur relative">
       <nav className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
         <h1 className="font-mono text-lg text-[var(--text)]">
-          ~/<span className="text-[var(--accent)]">elie</span>.dev
+          <span className="text-[var(--accent)]">elie</span>.dev
         </h1>
 
         {/* Liens desktop */}
