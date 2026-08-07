@@ -72,56 +72,70 @@ export default function Curseur() {
 
   if (!isVisible) return null;
 
-  const color = isPointer ? '#ff3b3b' : 'var(--accent)';
+  // Rouge vif néon ultra contrasté
+  const color = isPointer ? '#ff0033' : 'var(--accent)';
   const size = isPointer ? 36 : 48;
 
   return (
     <>
-      {/* Point central plus épais et plus lumineux */}
+      {/* Point central : suppression du mix-blend au hover pour garder un vrai rouge vif et néon */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference
-                   w-2 h-2 rounded-full transition-colors duration-150"
+        className={`fixed top-0 left-0 pointer-events-none z-[9999] w-2.5 h-2.5 rounded-full transition-colors duration-150 ${
+          isPointer ? '' : 'mix-blend-difference'
+        }`}
         style={{ 
           backgroundColor: color, 
-          boxShadow: `0 0 8px ${color}, 0 0 14px ${color}` 
+          boxShadow: isPointer 
+            ? `0 0 10px ${color}, 0 0 20px ${color}, 0 0 30px ${color}` 
+            : `0 0 8px ${color}, 0 0 14px ${color}`
         }}
       />
 
       {/* Groupe du viseur */}
       <div
         ref={viseurRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference
-                   transition-all duration-300 ease-out"
+        className={`fixed top-0 left-0 pointer-events-none z-[9999] transition-all duration-300 ease-out ${
+          isPointer ? '' : 'mix-blend-difference'
+        }`}
         style={{ width: size, height: size }}
       >
         <svg width={size} height={size} viewBox="0 0 48 48" style={{ overflow: 'visible' }}>
 
-          {/* Anneau pointillé rotatif plus épais */}
+          {/* Anneau pointillé rotatif */}
           <g ref={rotationRef} style={{ transformOrigin: '24px 24px' }}>
             <circle
               cx="24" cy="24" r="17"
-              fill="none" stroke={color} strokeWidth="1.8"
-              strokeDasharray="4 4" opacity="0.8"
+              fill="none" stroke={color} strokeWidth={isPointer ? "2.2" : "1.8"}
+              strokeDasharray="4 4" opacity={isPointer ? "1" : "0.8"}
             />
           </g>
 
-          {/* Cercle central avec épaisseur 2px et drop-shadow appuyé */}
+          {/* Cercle central renforcé avec contour blanc sous-jacent si rouge */}
+          {isPointer && (
+            <circle
+              cx="24" cy="24" r={6}
+              fill="none" stroke="#ffffff" strokeWidth="4" opacity="0.3"
+            />
+          )}
           <circle
             cx="24" cy="24" r={isPointer ? 6 : 9}
-            fill="none" stroke={color} strokeWidth="2"
+            fill={isPointer ? "rgba(255, 0, 51, 0.15)" : "none"} 
+            stroke={color} strokeWidth={isPointer ? "2.5" : "2"}
             className="transition-all duration-200"
-            style={{ filter: `drop-shadow(0 0 5px ${color})` }}
+            style={{ 
+              filter: `drop-shadow(0 0 8px ${color}) drop-shadow(0 0 12px ${color})` 
+            }}
           />
 
-          {/* Flash / Onde de choc au lock plus épaisse */}
+          {/* Onde de choc au lock */}
           {justLocked && (
             <circle
               cx="24" cy="24" r="17"
-              fill="none" stroke={color} strokeWidth="2.5"
-              opacity="0.9"
+              fill="none" stroke={color} strokeWidth="3"
+              opacity="1"
             >
-              <animate attributeName="r" from="8" to="22" dur="0.22s" fill="freeze" />
+              <animate attributeName="r" from="8" to="24" dur="0.22s" fill="freeze" />
               <animate attributeName="opacity" from="1" to="0" dur="0.22s" fill="freeze" />
             </circle>
           )}

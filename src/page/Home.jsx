@@ -1,5 +1,3 @@
-import Profil from '../assets/profil.png';
-import Panel from '../components/Panel';
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
@@ -13,23 +11,21 @@ function splitLetters(text) {
 }
 
 export default function Home() {
-  const panelRef = useRef(null);
   const nameRef = useRef(null);
   const introRef = useRef(null);
-  const descRef = useRef(null);
+  const taglineRef = useRef(null);
   const ctaRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // 1. Timeline principale pour l'apparition
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // 1. La ligne "// bonjour, je suis développeur" fade + slide
       tl.fromTo(
         introRef.current,
         { opacity: 0, y: -10 },
         { opacity: 1, y: 0, duration: 0.5 }
       )
-        // 2. Le nom s'affiche lettre par lettre, avec plus de peps
         .fromTo(
           nameRef.current.querySelectorAll(".inline-block"),
           {
@@ -54,111 +50,86 @@ export default function Home() {
           },
           "-=0.2"
         )
-        // 3. Description
         .fromTo(
-          descRef.current,
+          taglineRef.current,
           { opacity: 0, y: 15 },
           { opacity: 1, y: 0, duration: 0.6 },
           "-=0.3"
         )
-        // 4. Boutons
         .fromTo(
           ctaRef.current.children,
           { opacity: 0, y: 15 },
           { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
           "-=0.4"
-        )
-        // 5. Panel de droite
-        .fromTo(
-          panelRef.current,
-          { opacity: 0, y: 30, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.8 },
-          "-=0.5"
         );
 
-      // 6. Flottement continu des boutons, une fois qu'ils sont apparus
-      gsap.to(ctaRef.current.children, {
-        y: -8,
-        duration: 1.6,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-        stagger: 0.3,
-        delay: tl.duration(),
+      // 2. CORRECTION : Animation de flottement infinie fluide
+      // Nous créons une animation distincte pour chaque bouton afin d'éviter le décalage (stagger) qui saccade ici.
+      const boutons = ctaRef.current.children;
+      
+      Array.from(boutons).forEach((bouton, index) => {
+          gsap.to(bouton, {
+            y: -10, // Amplitude légèrement augmentée
+            duration: 1.6,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            // On conserve un léger décalage dans le démarrage pour le style, mais SANS stagger sur l'animation repeat.
+            delay: tl.duration() + (index * 0.2), 
+          });
       });
     });
 
-    return () => ctx.revert();
+    return () => ctx.revert(); // Nettoyage propre
   }, []);
 
   return (
     <section id="home" className="min-h-screen flex items-center px-6">
-      <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-6xl mx-auto w-full">
 
-        {/* Partie gauche */}
-        <div>
-          <p
-            ref={introRef}
-            className="font-mono text-[var(--accent)] text-sm mb-4"
+        <p
+          ref={introRef}
+          className="font-mono text-[var(--accent)] text-sm mb-4"
+        >
+          bonjour, je suis développeur
+        </p>
+
+        <h1
+          ref={nameRef}
+          className="text-6xl md:text-8xl font-bold leading-none [perspective:600px]"
+        >
+          {splitLetters("Maharavo")}
+          <br />
+          <span className="text-[var(--accent)]">
+            {splitLetters("Elie")}
+          </span>
+        </h1>
+
+        <p
+          ref={taglineRef}
+          className="mt-8 text-[var(--text-muted)] text-xl md:text-2xl max-w-2xl"
+        >
+          Je transforme des idées en applications web solides,
+          du concept au déploiement.
+        </p>
+
+        <div ref={ctaRef} className="flex gap-4 mt-10 justify-end">
+          {/* CORRECTION : Classes CSS */}
+          <a
+            href="#projects"
+            // J'ai ajouté transition-transform pour l'exemple, mais assurez-vous 
+            // de ne pas avoir de transition CSS sur la propriété 'y' (transform).
+            className="bg-[var(--accent)] text-[#04342c] font-medium px-6 py-3 rounded-lg hover:opacity-90 transition-all duration-300 ease-out will-change-transform"
           >
-             bonjour, je suis développeur
-          </p>
+            Voir mes projets
+          </a>
 
-          <h1
-            ref={nameRef}
-            className="text-5xl md:text-6xl font-bold leading-tight [perspective:600px]"
+          <a
+            href="/cv.pdf"
+            className="border border-[var(--border)] px-6 py-3 rounded-lg hover:border-[var(--accent)] transition-all duration-300 ease-out will-change-transform"
           >
-            {splitLetters("Maharavo")}
-            <br />
-            <span className="text-[var(--accent)]">
-              {splitLetters("Elie")}
-            </span>
-          </h1>
-
-          <p
-            ref={descRef}
-            className="mt-6 text-[var(--text-muted)] text-lg max-w-md"
-          >
-            Développeur Full Stack. Je construis des applications web
-            concrètes — de la gestion de caisse aux plateformes de prêts —
-            avec React, Laravel et MySQL.
-          </p>
-
-          <div ref={ctaRef} className="flex gap-4 mt-8">
-            <a
-              href="#projects"
-              className="bg-[var(--accent)] text-[#04342c] font-medium px-6 py-3 rounded-lg hover:opacity-90 hover:-translate-y-0.5 transition"
-            >
-              Voir mes projets
-            </a>
-
-            <a
-              href="/cv.pdf"
-              className="border border-[var(--border)] px-6 py-3 rounded-lg hover:border-[var(--accent)] hover:-translate-y-0.5 transition"
-            >
-              Télécharger le CV
-            </a>
-          </div>
-        </div>
-
-        {/* Partie droite */}
-        <div ref={panelRef}>
-          <Panel filename="profil.json">
-            <div className="flex flex-col items-center text-center">
-              <img
-                src={Profil}
-                alt="Profil"
-                className="w-60 h-60 rounded-lg object-cover border border-[var(--border)] mb-6"
-              />
-
-              <div className="w-full font-mono text-sm text-left space-y-2">
-                <p><span className="text-[var(--text-muted)]">"nom"</span>: <span className="text-[var(--accent)]">"Maharavo Elie"</span>,</p>
-                <p><span className="text-[var(--text-muted)]">"role"</span>: <span className="text-[var(--accent-2)]">"Full Stack Dev"</span>,</p>
-                <p><span className="text-[var(--text-muted)]">"stack"</span>: [<span className="text-[var(--accent-2)]">"React"</span>, <span className="text-[var(--accent-2)]">"Laravel"</span>, <span className="text-[var(--accent-2)]">"MySQL"</span>],</p>
-                <p><span className="text-[var(--text-muted)]">"lieu"</span>: <span className="text-[var(--accent-2)]">"Madagascar"</span></p>
-              </div>
-            </div>
-          </Panel>
+            Télécharger le CV
+          </a>
         </div>
 
       </div>
