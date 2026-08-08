@@ -172,7 +172,7 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto">
 
         <div className="text-center mb-16">
-          <p className="font-mono text-[var(--accent)] text-sm">// projets</p>
+          <p className="font-mono text-[var(--accent)] text-sm">projets</p>
           <h2 className="text-4xl md:text-5xl font-bold mt-3">
             Quelques réalisations
           </h2>

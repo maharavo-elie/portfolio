@@ -165,7 +165,7 @@ export default function Skills() {
       <div className="max-w-6xl mx-auto">
 
         <div className="text-center mb-16">
-          <p className="font-mono text-[var(--accent)] text-sm">// compétences</p>
+          <p className="font-mono text-[var(--accent)] text-sm">compétences</p>
           <h2 className="text-4xl md:text-5xl font-bold mt-3">
             Technologies que j'utilise
           </h2>

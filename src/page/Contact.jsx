@@ -58,7 +58,7 @@ export default function Contact() {
       <div className="max-w-6xl mx-auto">
 
         <div className="text-center mb-16">
-          <p className="font-mono text-[var(--accent)] text-sm">// contact</p>
+          <p className="font-mono text-[var(--accent)] text-sm">contact</p>
           <h2 className="text-4xl md:text-5xl font-bold mt-3">Travaillons ensemble</h2>
         </div>
 
@@ -104,10 +104,10 @@ export default function Contact() {
                 </button>
 
                 {sent && (
-                  <p className="text-[var(--accent)] text-sm font-mono">// message envoyé avec succès, merci !</p>
+                  <p className="text-[var(--accent)] text-sm font-mono">message envoyé avec succès, merci beaucoup !</p>
                 )}
                 {error && (
-                  <p className="text-red-500 text-sm font-mono">// une erreur est survenue, veuillez réessayer.</p>
+                  <p className="text-red-500 text-sm font-mono">une erreur est survenue, veuillez réessayer.</p>
                 )}
               </form>
             </Panel>
