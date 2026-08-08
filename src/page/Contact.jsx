@@ -35,9 +35,9 @@ export default function Contact() {
     emailjs
       .send(
         "service_o0bw6io",      // Votre Service ID
-        "template_69kxxxo",    // Remplacez par votre Template ID (ex: template_xxxxxxx)
+        "template_gan5lzj",    // Remplacez par votre Template ID (ex: template_xxxxxxx)
         templateParams,
-        "VOTRE_PUBLIC_KEY"      // Remplacez par votre Public Key (dans Account / API Keys)
+        "Yyo4CvST18obDB26Z"      // Remplacez par votre Public Key (dans Account / API Keys)
       )
       .then(
         () => {
