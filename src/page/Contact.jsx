@@ -123,7 +123,7 @@ export default function Contact() {
                   rel="noreferrer" 
                   className="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
                 >
-                  +261 34 00 000 00
+                  +261 33 14 393 96
                 </a>
               </div>
 
