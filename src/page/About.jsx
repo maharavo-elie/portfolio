@@ -66,8 +66,6 @@ export default function Home() {
 
         {/* Colonne Droite : Présentation sur les études à l'ENI */}
         <div ref={descRef}>
-          <p className="font-mono text-[var(--accent)] text-sm mb-3">à propos</p>
-
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
             Actuellement étudiant en <span className="text-[var(--accent)]">2ᵉ année</span> à l'École Nationale d'Informatique (ENI)
           </h1>
