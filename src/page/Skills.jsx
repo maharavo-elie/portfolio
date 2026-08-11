@@ -71,7 +71,7 @@ function SkillItem({ skill }) {
     gsap.to(card, {
       rotationY: rotateY,
       rotationX: rotateX,
-      y: -3,
+      y: -2,
       duration: 0.2,
       ease: "power1.out",
       overwrite: "auto",
@@ -106,39 +106,39 @@ function SkillItem({ skill }) {
     >
       <div
         ref={cardRef}
-        className="group relative h-full rounded-xl will-change-transform [transform-style:preserve-3d]"
+        className="group relative h-full rounded-lg will-change-transform [transform-style:preserve-3d]"
       >
         <div
-          className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          className="pointer-events-none absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
           style={{
             background:
-              "radial-gradient(150px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 15%, transparent), transparent 70%)",
+              "radial-gradient(100px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 15%, transparent), transparent 70%)",
           }}
         />
 
-        <Panel className="h-full p-3.5 flex flex-col justify-between rounded-xl bg-white/5 border border-white/10 group-hover:border-[var(--accent)]/50 transition-colors duration-300 pointer-events-none">
+        <Panel className="h-full p-2.5 flex flex-col justify-between rounded-lg bg-white/5 border border-white/10 group-hover:border-[var(--accent)]/50 transition-colors duration-300 pointer-events-none">
           <div>
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-2.5 mb-1">
               <div
-                className="p-2 rounded-lg bg-white/5 flex items-center justify-center shrink-0"
+                className="p-1.5 rounded-md bg-white/5 flex items-center justify-center shrink-0"
                 style={{ color: skill.color }}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <h4 className="text-sm font-bold text-white truncate group-hover:text-[var(--accent)] transition-colors">
+                <h4 className="text-xs font-bold text-white truncate group-hover:text-[var(--accent)] transition-colors leading-tight">
                   {skill.name}
                 </h4>
-                <p className="text-[10px] text-[var(--text-muted)] truncate">{skill.category}</p>
+                <p className="text-[9px] text-[var(--text-muted)] truncate leading-tight">{skill.category}</p>
               </div>
             </div>
 
-            <p className="text-[11px] text-[var(--text-muted)] mt-1 truncate">
+            <p className="text-[10px] text-[var(--text-muted)] mt-1 truncate">
               {skill.desc}
             </p>
           </div>
 
-          <div className="w-full bg-white/10 h-1 rounded-full mt-3 overflow-hidden">
+          <div className="w-full bg-white/10 h-0.5 rounded-full mt-2 overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500 group-hover:w-full w-1/3"
               style={{ backgroundColor: skill.color }}
@@ -152,23 +152,23 @@ function SkillItem({ skill }) {
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-20 px-6">
-      <div className="max-w-6xl mx-auto space-y-12">
+    <section id="skills" className="py-16 px-6">
+      <div className="max-w-6xl mx-auto space-y-10">
         <div className="text-center">
           <p className="font-mono text-[var(--accent)] text-xs tracking-wider">compétences</p>
-          <h2 className="text-3xl md:text-4xl font-bold mt-2">
+          <h2 className="text-2xl md:text-3xl font-bold mt-1">
             Technologies que j'utilise
           </h2>
         </div>
 
-        <div className="space-y-10">
+        <div className="space-y-8">
           {skillCategories.map((cat, catIdx) => (
-            <div key={cat.title} className="space-y-3">
-              <h3 className="text-[11px] font-mono font-bold tracking-widest text-[var(--accent)] uppercase">
+            <div key={cat.title} className="space-y-2.5">
+              <h3 className="text-[10px] font-mono font-bold tracking-widest text-[var(--accent)] uppercase">
                 {cat.title}
               </h3>
 
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
                 {cat.skills.map((skill, skillIdx) => (
                   <Reveal key={skill.name} delay={(catIdx * 100) + (skillIdx * 50)}>
                     <SkillItem skill={skill} />
