@@ -25,7 +25,7 @@ const projects = [
     title: "Gestion de caisse d'église",
     description: "Application de gestion financière pour église, avec suivi des entrées, dépenses et solde en temps réel.",
     technologies: ["Laravel", "React", "MySQL"],
-    github: "#",
+    github: "https://github.com/maharavo-elie/laravel",
     demo: "#",
   },
   {
@@ -34,7 +34,7 @@ const projects = [
     title: "Gestion de prêts bancaires",
     description: "SPA de gestion de prêts avec authentification, CRUD complet et synthèses graphiques.",
     technologies: ["React", "PHP", "MySQL"],
-    github: "#",
+    github: "https://github.com/maharavo-elie/Jsx",
     demo: "#",
   },
   {
@@ -43,12 +43,11 @@ const projects = [
     title: "Portfolio personnel",
     description: "Ce portfolio, développé avec React, Vite et Tailwind CSS.",
     technologies: ["React", "Tailwind CSS"],
-    github: "#",
+    github: "https://github.com/maharavo-elie/portfolio",
     demo: "#",
   },
 ];
 
-// Carte de projet avec effet de tilt 3D qui suit la souris (GSAP quickTo)
 function ProjectCard({ project }) {
   const cardRef = useRef(null);
   const quickX = useRef(null);
@@ -61,28 +60,11 @@ function ProjectCard({ project }) {
     const card = cardRef.current;
     if (!card) return;
 
-    // quickTo crée une fonction ultra-optimisée pour des updates fréquentes
-    // (bien plus fluide que gsap.to() rappelé à chaque mousemove)
-    quickY.current = gsap.quickTo(card, "rotationY", {
-      duration: 0.6,
-      ease: "power3.out",
-    });
-    quickX.current = gsap.quickTo(card, "rotationX", {
-      duration: 0.6,
-      ease: "power3.out",
-    });
-    quickLift.current = gsap.quickTo(card, "y", {
-      duration: 0.6,
-      ease: "power3.out",
-    });
-    quickMx.current = gsap.quickTo(card, "--mx", {
-      duration: 0.3,
-      ease: "power3.out",
-    });
-    quickMy.current = gsap.quickTo(card, "--my", {
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    quickY.current = gsap.quickTo(card, "rotationY", { duration: 0.6, ease: "power3.out" });
+    quickX.current = gsap.quickTo(card, "rotationX", { duration: 0.6, ease: "power3.out" });
+    quickLift.current = gsap.quickTo(card, "y", { duration: 0.6, ease: "power3.out" });
+    quickMx.current = gsap.quickTo(card, "--mx", { duration: 0.3, ease: "power3.out" });
+    quickMy.current = gsap.quickTo(card, "--my", { duration: 0.3, ease: "power3.out" });
 
     gsap.set(card, { transformPerspective: 800, transformOrigin: "center" });
   }, []);
@@ -94,10 +76,8 @@ function ProjectCard({ project }) {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-
     const rotateY = ((x - centerX) / centerX) * 8;
     const rotateX = ((y - centerY) / centerY) * -8;
 
@@ -121,12 +101,10 @@ function ProjectCard({ project }) {
       onMouseLeave={handleMouseLeave}
       className="relative will-change-transform [transform-style:preserve-3d]"
     >
-      {/* Spotlight qui suit le curseur */}
       <div
         className="pointer-events-none absolute inset-0 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300 z-10"
         style={{
-          background:
-            "radial-gradient(200px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 15%, transparent), transparent 70%)",
+          background: "radial-gradient(200px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 15%, transparent), transparent 70%)",
         }}
       />
 
@@ -142,9 +120,7 @@ function ProjectCard({ project }) {
                 key={tech}
                 className="group font-mono bg-[var(--accent)]/10 text-[var(--accent)] px-2.5 py-1 rounded text-xs flex items-center gap-1.5 transition-all hover:bg-[var(--accent)]/20 hover:scale-110"
               >
-                {Icon && (
-                  <Icon className="text-sm transition-transform duration-300 group-hover:rotate-12" />
-                )}
+                {Icon && <Icon className="text-sm transition-transform duration-300 group-hover:rotate-12" />}
                 {tech}
               </span>
             );
@@ -152,14 +128,25 @@ function ProjectCard({ project }) {
         </div>
 
         <div className="flex gap-3 mt-6">
-          <a href={project.github} target="_blank" rel="noreferrer"
-            className="flex-1 text-center border border-[var(--border)] hover:border-[var(--accent)] hover:scale-105 active:scale-95 py-2.5 rounded-lg text-sm transition-all">
-            GitHub
-          </a>
-          <a href={project.demo} target="_blank" rel="noreferrer"
-            className="flex-1 text-center bg-[var(--accent)] text-[#04342c] font-medium hover:scale-105 active:scale-95 py-2.5 rounded-lg text-sm hover:opacity-90 transition-all">
-            Démo
-          </a>
+          {project.github && project.github !== "#" ? (
+            <a href={project.github} target="_blank" rel="noreferrer" className="flex-1 text-center border border-[var(--border)] hover:border-[var(--accent)] hover:scale-105 active:scale-95 py-2.5 rounded-lg text-sm transition-all">
+              GitHub
+            </a>
+          ) : (
+            <span className="flex-1 text-center border border-[var(--border)]/40 text-[var(--text-muted)] py-2.5 rounded-lg text-sm cursor-not-allowed opacity-50">
+              GitHub
+            </span>
+          )}
+
+          {project.demo && project.demo !== "#" ? (
+            <a href={project.demo} target="_blank" rel="noreferrer" className="flex-1 text-center bg-[var(--accent)] text-[#04342c] font-medium hover:scale-105 active:scale-95 py-2.5 rounded-lg text-sm hover:opacity-90 transition-all">
+              Démo
+            </a>
+          ) : (
+            <span className="flex-1 text-center bg-[var(--accent)]/30 text-[#04342c]/50 font-medium py-2.5 rounded-lg text-sm cursor-not-allowed">
+              Démo
+            </span>
+          )}
         </div>
       </Panel>
     </div>
@@ -170,12 +157,9 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-
         <div className="text-center mb-16">
           <p className="font-mono text-[var(--accent)] text-sm">projets</p>
-          <h2 className="text-4xl md:text-5xl font-bold mt-3">
-            Quelques réalisations
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold mt-3">Quelques réalisations</h2>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -185,7 +169,6 @@ export default function Projects() {
             </Reveal>
           ))}
         </div>
-
       </div>
     </section>
   );
